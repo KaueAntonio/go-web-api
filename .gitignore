@@ -19,3 +19,8 @@
 
 # Go workspace file
 go.work
+
+# Other Extensions
+*.development.json
+*.development.env
+*.env
