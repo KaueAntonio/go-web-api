@@ -17,5 +17,5 @@ func HandleError(w http.ResponseWriter, r *http.Request, msg string, code int) {
 		code = 500
 	}
 
-	http.Redirect(w, r, fmt.Sprintf("/error/%d", code), http.StatusFound)
+	http.Redirect(w, r, fmt.Sprintf("/error/%d/%s", code, msg), http.StatusFound)
 }

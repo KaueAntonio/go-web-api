@@ -1,51 +1,46 @@
 package erroService
 
 import (
-	"fmt"
 	"net/http"
+	"net/url"
+
+	"github.com/go-chi/chi"
 )
 
 func Error404(w http.ResponseWriter, r *http.Request) {
 
-	msg := r.URL.Query().Get("msg")
+	msg := chi.URLParam(r, "msg")
 
-	if msg != "" {
-		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "Erro %s - Página não encontrada", msg)
-	} else {
-		w.WriteHeader(http.StatusNotFound)
-		fmt.Fprint(w, "Página não encontrada")
-	}
+	w.WriteHeader(http.StatusNotFound)
 
-	http.Error(w, msg, 404)
+	http.Error(w, decodeMsg(msg, w), 404)
 }
 
 func Error500(w http.ResponseWriter, r *http.Request) {
 
-	msg := r.URL.Query().Get("msg")
+	msg := chi.URLParam(r, "msg")
 
-	if msg != "" {
-		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "Erro %s - Página não encontrada", msg)
-	} else {
-		w.WriteHeader(http.StatusNotFound)
-		fmt.Fprint(w, "Página não encontrada")
-	}
+	w.WriteHeader(http.StatusInternalServerError)
 
-	http.Error(w, msg, 500)
+	http.Error(w, decodeMsg(msg, w), 500)
 }
 
 func Error401(w http.ResponseWriter, r *http.Request) {
 
-	msg := r.URL.Query().Get("msg")
+	msg := chi.URLParam(r, "msg")
 
-	if msg != "" {
-		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "Erro %s - Página não encontrada", msg)
-	} else {
-		w.WriteHeader(http.StatusNotFound)
-		fmt.Fprint(w, "Página não encontrada")
+	w.WriteHeader(http.StatusUnauthorized)
+
+	http.Error(w, decodeMsg(msg, w), 401)
+}
+
+func decodeMsg(msg string, w http.ResponseWriter) (m string) {
+	unescapedMessage, err := url.QueryUnescape(msg)
+
+	if err != nil {
+		http.Error(w, "Erro ao decodificar a mensagem", http.StatusInternalServerError)
+		return
 	}
 
-	http.Error(w, msg, 401)
+	return unescapedMessage
 }

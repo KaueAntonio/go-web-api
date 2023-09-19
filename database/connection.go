@@ -3,7 +3,7 @@ package db
 import (
 	"context"
 	"database/sql"
-	config "web/app/api/Config"
+	config "web/app/api/config"
 
 	_ "github.com/go-sql-driver/mysql"
 )

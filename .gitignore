@@ -24,3 +24,4 @@ go.work
 *.development.json
 *.development.env
 *.env
+Config.json

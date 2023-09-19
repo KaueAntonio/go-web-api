@@ -2,6 +2,6 @@ package main
 
 import "web/app/api/server"
 
-func Main() {
+func main() {
 	server.Expose()
 }
