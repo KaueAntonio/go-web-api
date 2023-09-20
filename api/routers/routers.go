@@ -11,4 +11,6 @@ func ExposeControllers(r *chi.Mux) {
 	c.AddAuthController(r)
 
 	c.AddErrorController(r)
+
+	c.AddNotaFiscalController(r)
 }

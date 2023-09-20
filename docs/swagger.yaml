@@ -1,0 +1,14 @@
+info:
+  contact: {}
+paths:
+  /exemplo:
+    get:
+      description: Esta rota é usada para fins de exemplo Swagger.
+      operationId: exemplo-rota-swagger
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Exemplo de rota Swagger
+swagger: "2.0"

@@ -1,0 +1,23 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/exemplo": {
+            "get": {
+                "description": "Esta rota é usada para fins de exemplo Swagger.",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Exemplo de rota Swagger",
+                "operationId": "exemplo-rota-swagger",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    }
+}

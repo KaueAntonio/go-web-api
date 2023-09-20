@@ -5,16 +5,10 @@ import (
 	"net/http"
 )
 
-func GetResult(r any, w http.ResponseWriter) {
-	message := "Sucesso!"
-
-	if r != nil {
-		r = ""
-	}
+func GetResult(r string, w http.ResponseWriter) {
 
 	resp := map[string]any{
-		"Message": message,
-		"Data":    r,
+		"Data": r,
 	}
 
 	w.Header().Add("Content-Type", "application/json")

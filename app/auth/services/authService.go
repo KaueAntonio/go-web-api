@@ -1,6 +1,7 @@
 package authService
 
 import (
+	"fmt"
 	"net/http"
 	errors "web/app/api/middlewares/error"
 	"web/app/api/middlewares/result"
@@ -9,6 +10,12 @@ import (
 	bodyEncoding "web/app/app/json"
 )
 
+// @Summary Exemplo de rota Swagger
+// @Description Esta rota é usada para fins de exemplo Swagger.
+// @ID exemplo-rota-swagger
+// @Produce json
+// @Success 200
+// @Router /exemplo [get]
 func Login(w http.ResponseWriter, r *http.Request) {
 	var p models.Pessoa
 
@@ -20,5 +27,5 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		errors.HandleError(w, r, "Usuário não encontrado", 3)
 	}
 
-	result.GetResult(id, w)
+	result.GetResult(fmt.Sprint(id), w)
 }

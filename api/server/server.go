@@ -7,9 +7,10 @@ import (
 	"web/app/api/routers"
 
 	"github.com/go-chi/chi"
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
-func Expose() {
+func ExposeServer() {
 	err := config.Load()
 
 	if err != nil {
@@ -20,5 +21,11 @@ func Expose() {
 
 	routers.ExposeControllers(r)
 
+	fmt.Println("Server Iniciado Com Sucesso\nUrl: http://localhost:" + config.GetServerPort())
+
 	http.ListenAndServe(fmt.Sprintf(":%s", config.GetServerPort()), r)
+
+	http.Handle("swagger", httpSwagger.Handler(
+		httpSwagger.URL("localhost:"+config.GetServerPort()+"/swagger/doc.json"),
+	))
 }

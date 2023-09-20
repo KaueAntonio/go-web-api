@@ -6,11 +6,11 @@ import (
 	"github.com/spf13/viper"
 )
 
-var cfg *Config
-
 type Config struct {
-	Api ApiConfig
-	Db  DatabaseConfig
+	Api                 ApiConfig
+	Db                  DatabaseConfig
+	HttpClient          HttpClientConfig
+	PortalTransparencia PortalTransparenciaConfig
 }
 
 type ApiConfig struct {
@@ -25,10 +25,22 @@ type DatabaseConfig struct {
 	Database string
 }
 
+type HttpClientConfig struct {
+	BaseUrl string
+}
+
+type PortalTransparenciaConfig struct {
+	Key string
+}
+
+var cfg *Config
+
 func init() {
 	viper.SetDefault("Api.Port", "9000")
 	viper.SetDefault("Database.Host", "localhost")
 	viper.SetDefault("Database.Port", "5432")
+	viper.SetDefault("HttpClient.BaseUrl", "https://api.portaldatransparencia.gov.br/api-de-dados/")
+	viper.SetDefault("PortalTransparencia.Key", "0c0c0ca0a6f1d72d")
 }
 
 func Load() error {
@@ -58,6 +70,14 @@ func Load() error {
 		Database: viper.GetString("Database.Name"),
 	}
 
+	cfg.HttpClient = HttpClientConfig{
+		BaseUrl: viper.GetString("HttpClient.BaseUrl"),
+	}
+
+	cfg.PortalTransparencia = PortalTransparenciaConfig{
+		Key: viper.GetString("PortalTransparencia.Key"),
+	}
+
 	return nil
 }
 
@@ -79,4 +99,12 @@ func GetDbConnection() mysql.Config {
 
 func GetServerPort() string {
 	return cfg.Api.Port
+}
+
+func GetBaseUrl() string {
+	return cfg.HttpClient.BaseUrl
+}
+
+func GetChaveApi() string {
+	return cfg.PortalTransparencia.Key
 }
